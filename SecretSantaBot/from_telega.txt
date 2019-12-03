@@ -1,0 +1,492 @@
+﻿
+367265107
+{"ok":true,"result":{"id":721230128,"is_bot":true,"first_name":"GoogleForMe","username":"mahjong_counter_bot"}}
+
+
+
+{"ok":true,"result":[{"update_id":114974116,
+"message":{"message_id":7,"from":{"id":367265107,"is_bot":false,"first_name":"Kate","last_name":"Il","language_code":"ru"},"chat":{"id":367265107,"first_name":"Kate","last_name":"Il","type":"private"},"date":1548800941,"text":"\u043f\u0440\u0438\u0432\u0435\u0442"}},
+{"update_id":114974117,
+"message":{"message_id":8,"from":{"id":367265107,"is_bot":false,"first_name":"Kate","last_name":"Il","language_code":"ru"},"chat":{"id":367265107,"first_name":"Kate","last_name":"Il","type":"private"},"date":1548800946,"text":"\u0442\u0435\u0431\u0435 \u043c\u043e\u0439 \u0434\u0440\u0443\u0433"}},
+{"update_id":114974118,
+"message":{"message_id":9,"from":{"id":367265107,"is_bot":false,"first_name":"Kate","last_name":"Il","language_code":"ru"},"chat":{"id":367265107,"first_name":"Kate","last_name":"Il","type":"private"},"date":1548800961,"text":"/\u043e\u043f\u043b\u044f"}}]}
+
+картинка и эмодзи в разных сообщениях
+
+{[
+  {
+    "update_id": 387510186,
+    "message": {
+      "message_id": 71,
+      "from": {
+        "id": 367265107,
+        "is_bot": false,
+        "first_name": "Kate",
+        "last_name": "Il",
+        "language_code": "ru"
+      },
+      "chat": {
+        "id": 367265107,
+        "first_name": "Kate",
+        "last_name": "Il",
+        "type": "private"
+      },
+      "date": 1550009580,
+      "photo": [
+        {
+          "file_id": "AgADAgADfqoxGx0SGUtKMDlMhTEMFRnz9A4ABFyRGi9WOAK7DMgEAAEC",
+          "file_size": 1040,
+          "width": 90,
+          "height": 51
+        },
+        {
+          "file_id": "AgADAgADfqoxGx0SGUtKMDlMhTEMFRnz9A4ABL4oJee1xEOCDcgEAAEC",
+          "file_size": 12678,
+          "width": 320,
+          "height": 180
+        },
+        {
+          "file_id": "AgADAgADfqoxGx0SGUtKMDlMhTEMFRnz9A4ABNAWjTpfwW7WD8gEAAEC",
+          "file_size": 55372,
+          "width": 800,
+          "height": 450
+        },
+        {
+          "file_id": "AgADAgADfqoxGx0SGUtKMDlMhTEMFRnz9A4ABHufOvSeR8YfDsgEAAEC",
+          "file_size": 119876,
+          "width": 1280,
+          "height": 720
+        }
+      ]
+    }
+  },
+  {
+    "update_id": 387510187,
+    "message": {
+      "message_id": 72,
+      "from": {
+        "id": 367265107,
+        "is_bot": false,
+        "first_name": "Kate",
+        "last_name": "Il",
+        "language_code": "ru"
+      },
+      "chat": {
+        "id": 367265107,
+        "first_name": "Kate",
+        "last_name": "Il",
+        "type": "private"
+      },
+      "date": 1550009585,
+      "sticker": {
+        "width": 512,
+        "height": 434,
+        "emoji": "😐",
+        "set_name": "Sangatsu_no_Lion",
+        "thumb": {
+          "file_id": "AAQCABPJGoINAARHmMiRmz69hY-OAAIC",
+          "file_size": 4024,
+          "width": 128,
+          "height": 108
+        },
+        "file_id": "CAADAgADaggAAuX3UgOXWJxRto8x_AI",
+        "file_size": 25196
+      }
+    }
+  }
+]}
+
+
+
+
+картинка эмодзи команда и контакт
+{"ok":true,"result":[{"update_id":387510186,
+"message":{"message_id":71,"from":{"id":367265107,"is_bot":false,"first_name":"Kate","last_name":"Il","language_code":"ru"},"chat":{"id":367265107,"first_name":"Kate","last_name":"Il","type":"private"},"date":1550009580,"photo":[{"file_id":"AgADAgADfqoxGx0SGUtKMDlMhTEMFRnz9A4ABFyRGi9WOAK7DMgEAAEC","file_size":1040,"width":90,"height":51},{"file_id":"AgADAgADfqoxGx0SGUtKMDlMhTEMFRnz9A4ABL4oJee1xEOCDcgEAAEC","file_size":12678,"width":320,"height":180},{"file_id":"AgADAgADfqoxGx0SGUtKMDlMhTEMFRnz9A4ABNAWjTpfwW7WD8gEAAEC","file_size":55372,"width":800,"height":450},{"file_id":"AgADAgADfqoxGx0SGUtKMDlMhTEMFRnz9A4ABHufOvSeR8YfDsgEAAEC","file_size":119876,"width":1280,"height":720}]}},{"update_id":387510187,
+"message":{"message_id":72,"from":{"id":367265107,"is_bot":false,"first_name":"Kate","last_name":"Il","language_code":"ru"},"chat":{"id":367265107,"first_name":"Kate","last_name":"Il","type":"private"},"date":1550009585,"sticker":{"width":512,"height":434,"emoji":"\ud83d\ude10","set_name":"Sangatsu_no_Lion","thumb":{"file_id":"AAQCABPJGoINAARHmMiRmz69hY-OAAIC","file_size":4024,"width":128,"height":108},"file_id":"CAADAgADaggAAuX3UgOXWJxRto8x_AI","file_size":25196}}},{"update_id":387510188,
+"message":{"message_id":73,"from":{"id":367265107,"is_bot":false,"first_name":"Kate","last_name":"Il","language_code":"ru"},"chat":{"id":367265107,"first_name":"Kate","last_name":"Il","type":"private"},"date":1550009822,"text":"/top","entities":[{"offset":0,"length":4,"type":"bot_command"}]}},{"update_id":387510189,
+"message":{"message_id":74,"from":{"id":367265107,"is_bot":false,"first_name":"Kate","last_name":"Il","language_code":"ru"},"chat":{"id":367265107,"first_name":"Kate","last_name":"Il","type":"private"},"date":1550009842,"contact":{"phone_number":"+79627238642","first_name":"\u0412\u0430\u043b\u044f","last_name":"\u0411\u0430\u0448\u0442\u0430\u0432\u0435\u043d\u043a\u043e","user_id":298108087}}}]}
+
+core.telegram.org/method/messages.addChatUser
+
+
+телега дерьмо!!!
+даты в меседжах хранятся в unix формате 
+а это означает отчет должен вестись от сюда 00:00:00 UTC 1 января 1970 года (четверг)
+а даты это отсчет в секундах от начала отсчета
+// Example of a UNIX timestamp for 11-29-2013 4:58:30
+double timestamp = 1385701110;
+
+// Format our new DateTime object to start at the UNIX Epoch
+System.DateTime dateTime = new System.DateTime(1970, 1, 1, 0, 0, 0, 0);
+
+// Add the timestamp (number of seconds since the Epoch) to be converted
+dateTime = dateTime.AddSeconds(timestamp);
+
+
+{{
+  "update_id": 387510249,
+  "message": {
+    "message_id": 168,
+    "from": {
+      "id": 367265107,
+      "is_bot": false,
+      "first_name": "Kate",
+      "last_name": "Il",
+      "language_code": "ru"
+    },
+    "chat": {
+      "id": 367265107,
+      "first_name": "Kate",
+      "last_name": "Il",
+      "type": "private"
+    },
+    "date": 1551556656,
+    "text": "Привет! я бот-игра, а точнее клон мафии в около средневиковом сеттинге. вся игра проходит тут. Ты просто создаешь или подключаешься к уже существующей комнате и за тем играешь здесь же.\n Напиши /help чтобы узнать больше о командах или /rules чтобы подробнее узнать о правилах\n Ты всегда можешь поблагодарить написав мне \"/thank СООБЩЕНИЕ\"",
+    "entities": [
+      {
+        "offset": 194,
+        "length": 5,
+        "type": "bot_command"
+      },
+      {
+        "offset": 235,
+        "length": 6,
+        "type": "bot_command"
+      },
+      {
+        "offset": 321,
+        "length": 6,
+        "type": "bot_command"
+      }
+    ]
+  }
+}}
+
+
+
+{{
+  "update_id": 387510250,
+  "message": {
+    "message_id": 169,
+    "from": {
+      "id": 367265107,
+      "is_bot": false,
+      "first_name": "Kate",
+      "last_name": "Il",
+      "language_code": "ru"
+    },
+    "chat": {
+      "id": 367265107,
+      "first_name": "Kate",
+      "last_name": "Il",
+      "type": "private"
+    },
+    "date": 1551556681,
+    "text": "Доступны следующие команды:\nКогда вне игры(комнаты):\n/new - создаёт новую комнату\n/new num - где num число игроков\n/free - показывает доступные комнаты которые ещё не начали игру\n/join - присоединение к рандомной комнате\n/join num - где num это id комнаты\nКогда уже в комнате:\n/exit - выйти из комнаты\nКогда началась игра:\n/info - инфа по состоянию игры\n/info имя_игрока информация об игроке\n/exit - выйти из игры(самовыпил)\nвсе остальное что ты выведешь будет рассчитано как собщаение в игру\n/kill name - убить поселенца (днём) / убить человека (мафия) / проверить поселенца (охотник / лекарь)\nВсегда:\n/top - топ самых крутых участников\n/thank - написать благодарность разработчику\n/rules - описание правил игры\n/story - описание сеттинга игры",
+    "entities": [
+      {
+        "offset": 28,
+        "length": 25,
+        "type": "bold"
+      },
+      {
+        "offset": 53,
+        "length": 4,
+        "type": "bot_command"
+      },
+      {
+        "offset": 82,
+        "length": 4,
+        "type": "bot_command"
+      },
+      {
+        "offset": 87,
+        "length": 3,
+        "type": "italic"
+      },
+      {
+        "offset": 115,
+        "length": 5,
+        "type": "bot_command"
+      },
+      {
+        "offset": 179,
+        "length": 5,
+        "type": "bot_command"
+      },
+      {
+        "offset": 221,
+        "length": 5,
+        "type": "bot_command"
+      },
+      {
+        "offset": 227,
+        "length": 3,
+        "type": "italic"
+      },
+      {
+        "offset": 256,
+        "length": 21,
+        "type": "bold"
+      },
+      {
+        "offset": 277,
+        "length": 5,
+        "type": "bot_command"
+      },
+      {
+        "offset": 302,
+        "length": 21,
+        "type": "bold"
+      },
+      {
+        "offset": 323,
+        "length": 5,
+        "type": "bot_command"
+      },
+      {
+        "offset": 354,
+        "length": 5,
+        "type": "bot_command"
+      },
+      {
+        "offset": 360,
+        "length": 10,
+        "type": "italic"
+      },
+      {
+        "offset": 392,
+        "length": 5,
+        "type": "bot_command"
+      },
+      {
+        "offset": 493,
+        "length": 5,
+        "type": "bot_command"
+      },
+      {
+        "offset": 499,
+        "length": 4,
+        "type": "code"
+      },
+      {
+        "offset": 595,
+        "length": 8,
+        "type": "bold"
+      },
+      {
+        "offset": 603,
+        "length": 4,
+        "type": "bot_command"
+      },
+      {
+        "offset": 638,
+        "length": 6,
+        "type": "bot_command"
+      },
+      {
+        "offset": 683,
+        "length": 6,
+        "type": "bot_command"
+      },
+      {
+        "offset": 713,
+        "length": 6,
+        "type": "bot_command"
+      }
+    ]
+  }
+}}
+
+//ответ от кнопки в сообщении
+
+{
+  "ok": true,
+  "result": [
+    {
+      "update_id": 555290600,
+      "callback_query": {
+        "id": "1577391625041537690",
+        "from": {
+          "id": 367265107,
+          "is_bot": false,
+          "first_name": "Kate",
+          "last_name": "Il",
+          "language_code": "ru"
+        },
+        "message": {
+          "message_id": 878,
+          "from": {
+            "id": 641929894,
+            "is_bot": true,
+            "first_name": "Werewolf the game",
+            "username": "WerewolfTheGameBot"
+          },
+          "chat": {
+            "id": 367265107,
+            "first_name": "Kate",
+            "last_name": "Il",
+            "type": "private"
+          },
+          "date": 1555261827,
+          "text": "veb"
+        },
+        "chat_instance": "-2270538722155919868",
+        "data": "oh you clicked me)"
+      }
+    }
+  ]
+}
+
+// ответ от нажатия кнопки с клавиатуры и указанием при создании жтой кнопки что она должна контак человека передать
+
+{
+  "ok": true,
+  "result": [
+    {
+      "update_id": 555290601,
+      "message": {
+        "message_id": 880,
+        "from": {
+          "id": 367265107,
+          "is_bot": false,
+          "first_name": "Kate",
+          "last_name": "Il",
+          "language_code": "ru"
+        },
+        "chat": {
+          "id": 367265107,
+          "first_name": "Kate",
+          "last_name": "Il",
+          "type": "private"
+        },
+        "date": 1555267801,
+        "reply_to_message": {
+          "message_id": 879,
+          "from": {
+            "id": 641929894,
+            "is_bot": true,
+            "first_name": "Werewolf the game",
+            "username": "WerewolfTheGameBot"
+          },
+          "chat": {
+            "id": 367265107,
+            "first_name": "Kate",
+            "last_name": "Il",
+            "type": "private"
+          },
+          "date": 1555267786,
+          "text": "veb"
+        },
+        "contact": {
+          "phone_number": "+79119004094",
+          "first_name": "Kate",
+          "last_name": "Il",
+          "user_id": 367265107
+        }
+      }
+    }
+  ]
+}
+
+// ответ от запроса с кнопкой
+
+{
+  "ok": true,
+  "result": [
+    {
+      "update_id": 555290603,
+      "message": {
+        "message_id": 884,
+        "from": {
+          "id": 367265107,
+          "is_bot": false,
+          "first_name": "Kate",
+          "last_name": "Il",
+          "language_code": "ru"
+        },
+        "chat": {
+          "id": 367265107,
+          "first_name": "Kate",
+          "last_name": "Il",
+          "type": "private"
+        },
+        "date": 1555268159,
+        "text": "click me!"
+      }
+    }
+  ]
+}
+
+
+// сообщение приходящее при добавлении пользователя в группу
+ {
+            "update_id": 273312096,
+            "message": {
+                "message_id": 12,
+                "from": {
+                    "id": 367265107,
+                    "is_bot": false,
+                    "first_name": "Kate",
+                    "last_name": "Il",
+                    "language_code": "ru"
+                },
+                "chat": {
+                    "id": -325592106,
+                    "title": "опл",
+                    "type": "group",
+                    "all_members_are_administrators": true
+                },
+                "date": 1574543700,
+                "new_chat_participant": {
+                    "id": 901127764,
+                    "is_bot": true,
+                    "first_name": "SecretSanta",
+                    "username": "GeheimlichNikolausBot"
+                },
+                "new_chat_member": {
+                    "id": 901127764,
+                    "is_bot": true,
+                    "first_name": "SecretSanta",
+                    "username": "GeheimlichNikolausBot"
+                },
+                "new_chat_members": [
+                    {
+                        "id": 901127764,
+                        "is_bot": true,
+                        "first_name": "SecretSanta",
+                        "username": "GeheimlichNikolausBot"
+                    }
+                ]
+            }
+        },
+
+//https://api.telegram.org/bot901127764:AAHmD8ReqhxVxJ1jHu_fKkkYOMIqIHKjst4/getChatMember?chat_id=-325592106&user_id=367265107
+
+// https://api.telegram.org/bot901127764:AAHmD8ReqhxVxJ1jHu_fKkkYOMIqIHKjst4/sendMessage
+{
+	"text":"d ",
+	"chat_id":-325592106,
+"reply_markup": { "keyboard": [ [{"text": "FIRST_BUTTON"}], [{ "text": "SECOND_BUTTON"}], [{ "text": "THIRD_BUTTON"}] ] }
+}
+
+//https://api.telegram.org/bot901127764:AAHmD8ReqhxVxJ1jHu_fKkkYOMIqIHKjst4/sendMessage
+{
+	"text":"d ",
+	"chat_id":-325592106,
+	"reply_markup": { "hide_keyboard":true }
+}
+
+
+Хо хо хо! Скоро новый год! 
+Я Распределил для каждого своего серктного санту!
+Нажми хочу узнать чей я санта и я прошепчу тебе на ушко в личной переписке
+
+Хочу узнать чей я санта
+
+Окей=)
+
+
+
+
+
