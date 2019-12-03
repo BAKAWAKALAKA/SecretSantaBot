@@ -12,20 +12,25 @@ namespace SecretSantaBot
         public bool CanRespond(Message message)
         {
             //todo if bot join to room
-            var session = _sessions.FirstOrDefault(q => q._room == message.Room);
+            var session = _sessions.FirstOrDefault(q => q.Room == message.Room);
             return (session != null) ? true : false;
         }
 
         public IEnumerable<Message> Respond(Message message)
         {
-            var session = _sessions.FirstOrDefault(q => q._room == message.Room);
+            var session = _sessions.FirstOrDefault(q => q.Room == message.Room);
             if (session != null)
             {
-                return session.Next(message);
+                var result = session.Next(message);
+                if (session.SessionState == null)
+                {
+                    _sessions.Remove(session);
+                }
+                return result;
             }
             else
             {
-                var newRoomSession = new RoomSession(message.Room,0);
+                var newRoomSession = new RoomSession(message.Room);
                 _sessions.Add(newRoomSession);
                 return newRoomSession.Next(message);
             }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 
 namespace SecretSantaBot
@@ -24,29 +23,31 @@ namespace SecretSantaBot
             _timer.Change(new TimeSpan(), period);
         }
 
+        /// <summary>
+        /// such simple realization because we don't need to use notify, deffered messages or hold callback message
+        /// </summary>
         private void Update()
         {
             var updates = _driver.GetUpdates();
-            var responses = new List<Message>();
+            var result = new List<Message>();
             foreach (var update in updates)
             {
                 foreach (var handler in _handlers)
                 {
                     if (handler.CanRespond(update))
                     {
-                        var response = handler.Respond(update);
-                        if (response.Any())
+                        var responses = handler.Respond(update);
+                        if (responses.Any())
                         {
-                            responses.AddRange(response);
+                            result.AddRange(responses);
                         }
                     }
                 }
             }
-            foreach (var response in responses)
+            foreach (var response in result)
             {
                 _driver.SendResponse(response);
             }
         }
-
     }
 }
