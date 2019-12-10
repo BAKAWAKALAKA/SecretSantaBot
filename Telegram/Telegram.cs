@@ -27,16 +27,16 @@ namespace Telegram
                     var time = new DateTime(1970, 1, 1, 0, 0, 0, 0);
                     var current = DateTime.Now.Subtract(new TimeSpan(3, 0, 0)); // ибо рашка
                     var diff = current - time;
-                    _lastUpdate = (int) diff.TotalSeconds;
+                    _lastUpdate = (int)diff.TotalSeconds;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw;
             }
         }
 
-        public void SendMessage(SendMessage message)
+        public Message SendMessage(SendMessage message)
         {
             throw new NotImplementedException();
         }
@@ -45,7 +45,7 @@ namespace Telegram
         {
             try
             {
-                var result = Execute("getMe");
+                var result = Execute<Check>("getMe");
                 return result.ok;
             }
             catch (Exception e)
@@ -54,11 +54,11 @@ namespace Telegram
             }
         }
 
-        public IEnumerable<Result> GetUpdates()
+        public IEnumerable<Update> GetUpdates()
         {
             try
             {
-                var result = Execute("getUpdates");
+                var result = Execute<Updates>("getUpdates");
                 if (result.ok)
                 {
                     return result.result;
@@ -71,15 +71,15 @@ namespace Telegram
             }
         }
 
-        public Result GetChatInfo(int chatId)
+        public ChatInfo GetChatInfo(int chatId)
         {
-            throw new NotImplementedException();
+
             try
             {
-                var result = Execute($"getChatInfo?chat_id={chatId}");
+                var result = Execute<ChatInfoResponse>($"getChatInfo?chat_id={chatId}");
                 if (result.ok)
                 {
-                   // return result.result;
+                    return result.chat_info;
                 }
                 return null;
             }
@@ -89,20 +89,26 @@ namespace Telegram
             }
         }
 
-        public bool ChangeProxy()
+        public bool ChangeProxy(string proxy)
         {
             throw new NotImplementedException();
         }
 
-        public int? GetChatCount(int chatId)
+        //todo change!!!it's wrong
+        public int GetChatCount(int chatId)
         {
-            throw new NotImplementedException();
+            var result = Execute<ChatCountResponse>($"getChatCount?chat_id={chatId}");
+            return result.count;
+        }
+
+        public From GetChatMember(int chatId, int userId)
+        {
             try
             {
-                var result = Execute($"getChatCount?chat_id={chatId}");
+                var result = Execute<UserMemberResponse>($"getChatMember?chat_id={chatId}&user_id={userId}");
                 if (result.ok)
                 {
-                   // return result.result;
+                    return result.user;
                 }
                 return null;
             }
@@ -112,25 +118,7 @@ namespace Telegram
             }
         }
 
-        public Result GetChatMember(int chatId, int userId)
-        {
-            throw new NotImplementedException();
-            try
-            {
-                var result = Execute($"getChatMember?chat_id={chatId}&user_id={userId}");
-                if (result.ok)
-                {
-                    //return result.result;
-                }
-                return null;
-            }
-            catch (Exception e)
-            {
-                return null;
-            }
-        }
-
-        public Response Execute(string cmd, SendMessage sendingMessage = null)
+        public T Execute<T>(string cmd, SendMessage sendingMessage = null)
         {
             var client = new RestClient($"{_base}/{cmd}");
             client.Proxy = new System.Net.WebProxy(proxy, port);
@@ -142,12 +130,12 @@ namespace Telegram
             var responce = client.Execute(request);
             if (responce.IsSuccessful)
             {
-                var result = JsonConvert.DeserializeObject<Response>(responce.Content); //change response to using list with generic class  for calling  Execute<Response<SomeGenericClass>>
+                var result = JsonConvert.DeserializeObject<T>(responce.Content); //change response to using list with generic class  for calling  Execute<Response<SomeGenericClass>>
                 return result;
             }
             else
             {
-                return null;
+                return default(T);
             }
         }
     }

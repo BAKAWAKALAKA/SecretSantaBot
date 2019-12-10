@@ -128,15 +128,51 @@ namespace Telegram.Models
         public int reply_to_message_id { get; set; }
     }
 
-    public class Result
+    public class Update
     {
         public int update_id { get; set; }
         public Message message { get; set; }
     }
 
-    public class Response
+    public class Updates: Response
+    {
+        public List<Update> result { get; set; }
+        public bool ok { get; set; }
+    }
+
+    public interface Response
+    {
+        bool ok { get; set; }
+    }
+
+    public class Check: Response
     {
         public bool ok { get; set; }
-        public List<Result> result { get; set; }
+
+        public bool result { get; set; }
     }
+
+    public class ChatInfoResponse : Response
+    {
+        public bool ok { get; set; }
+        public ChatInfo chat_info{ get; set;}
+    }
+
+    public class ChatCountResponse : Response
+    {
+        public bool ok { get; set; }
+        public int count { get; set; }
+    }
+
+    public class UserMemberResponse : Response
+    {
+        public bool ok { get; set; }
+        public From user { get; set; }
+    }
+
+    public class ChatInfo
+    {
+
+    }
+
 }
