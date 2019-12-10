@@ -19,10 +19,14 @@ namespace SecretSantaBot
 
         public IEnumerable<Message> NextState(Message message, RoomSession session)
         {
-            //inicial session
-            // create message for start
+            var result = new List<Message>();
+            result.Add(new Message()
+            {
+                Room = message.Room,
+                Text = "Хо хо хо! Скоро новый год! Я Распределил для каждого своего серктного санту! Нажми хочу узнать чей я санта и я прошепчу тебе на ушко в личной переписке"
+            });
             session.SessionState = new WaitAllResponState();
-            throw new NotImplementedException();
+            return result;
         }
     }
 
@@ -39,26 +43,28 @@ namespace SecretSantaBot
         public IEnumerable<Message> NextState(Message message, RoomSession session)
         {
             var result = new List<Message>();
-            RememberRespondedUser();
-            if (!isAllUsersRespond())
+            RememberRespondedUser(message.User);
+            if (session.Selected.Count < message.UserCount)
             {
                 // stay this state
                 // send resdonped user directly message
-                throw new NotImplementedException();
+                result.Add(CreateDirectMessage(message.Room, message.User.id,"check"));
             }
             else
             {
                 // respond all and go form this state
-                foreach(var user in selectedUsers)
+                var list = Extension.Rand(session.Selected.Count);
+                for(int i=0; i<session.Selected.Count;i++)
                 {
-                    result.Add(CreateDirectMessage(user, ""));
+                    //
+                    result.Add(CreateDirectMessage(message.Room, session.Selected[i].id, $"ты даришь подарок {session.Selected[list[i]].nam}"));
                 }
                 session.SessionState = null;
             }
             return result;
         }
 
-        private void RememberRespondedUser()
+        private void RememberRespondedUser(User user)
         {
             throw new NotImplementedException();
         }
@@ -68,7 +74,7 @@ namespace SecretSantaBot
             throw new NotImplementedException();
         }
 
-        private Message CreateDirectMessage(int user, string text)
+        private Message CreateDirectMessage(int chat, int user, string text)
         {
             throw new NotImplementedException();
         }
