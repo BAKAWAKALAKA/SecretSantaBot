@@ -1,6 +1,6 @@
 # SecretSantaBot
 
-When you add this bot to the room it send message with buttons. When all members push the button it send them directly who is their secret santa in the room.
+When you add this bot to a room it send message with buttons. When all members push the button it send them directly who is their secret santa in the room.
 
 
 ### Todo's
