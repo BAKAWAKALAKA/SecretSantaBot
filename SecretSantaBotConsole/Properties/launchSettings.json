@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "SecretSantaBotConsole": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}

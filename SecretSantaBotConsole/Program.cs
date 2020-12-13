@@ -1,4 +1,5 @@
 ﻿using System;
+using SecretSantaBot;
 
 namespace SecretSantaBotConsole
 {
@@ -9,11 +10,12 @@ namespace SecretSantaBotConsole
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
-
-           // var bot = new SecretSantaBot();
-           // bot.Run();
-
-            Console.WriteLine("Hello World!");
+            var telegram = new Telegram.Telegram();
+            var helpH = new HelpCommandHandler();
+            var se = new SecretCommandHandler();
+            var bot = new SecretSantaBot.SecretSantaBot(new SecretSantaBotConsole.Implementation.TelegramDriver(telegram), new ICommandHandler[] { se, helpH });
+            bot.Run(new TimeSpan(0,0,2));
+            while (true) { }
         }
     }
 }

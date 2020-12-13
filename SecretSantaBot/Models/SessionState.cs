@@ -6,26 +6,35 @@ using SecretSantaBot.Interfaces;
 
 namespace SecretSantaBot
 {
-    
 
     public class StartSessionState: ISessionState
     {
-       
         public StartSessionState()
         {
-
+            
         }
-
 
         public IEnumerable<Message> NextState(Message message, RoomSession session)
         {
             var result = new List<Message>();
-            result.Add(new Message()
+            if (message.Text == "/start")
             {
-                Room = message.Room,
-                Text = "Хо хо хо! Скоро новый год! Я Распределил для каждого своего серктного санту! Нажми хочу узнать чей я санта и я прошепчу тебе на ушко в личной переписке"
-            });
-            session.SessionState = new WaitAllResponState();
+                var buttons = new List<List<Button>>() { new List<Button>() { new Button() { Text="Участвовать", Data= "Участвовать" }, new Button() { Text = "Отказаться", Data = "Отказаться" } } };
+                result.Add(new Message()
+                {
+                    Room = message.Room,
+                    Text = "Хо хо хо! Скоро новый год! Я Распределил для каждого участника своего секретного санту! Нажми учатствовать и вскоре я прошепчу тебе на ушко кому дарить подарок.",
+                    keybord = new Keyboard()
+                    {
+                        Buttons = buttons,
+                        Inline = true
+                    }
+                    
+                });
+
+                //var userCount = Extension.TelegramDriver.GetRoomUserCount(message.Room) - 1;
+                session.SessionState = new WaitAllResponState(100);
+            }
             return result;
         }
     }
@@ -33,53 +42,182 @@ namespace SecretSantaBot
 
     public class WaitAllResponState : ISessionState
     {
-        List<int> selectedUsers;
+        private int _msg;
+        private int _startMsg;
+        private List<User> acceptUsers;
+        private List<User> refuseUsers;
+        private int memberCount; 
 
-        public WaitAllResponState()
+        public WaitAllResponState(int members)
         {
-            selectedUsers = new List<int>();
+            acceptUsers = new List<User>();
+            refuseUsers = new List<User>();
+
+            memberCount = members;
         }
 
         public IEnumerable<Message> NextState(Message message, RoomSession session)
         {
-            var result = new List<Message>();
-            RememberRespondedUser(message.User);
-            if (session.Selected.Count < message.UserCount)
+            List<Message> result = new List<Message>() { };
+
+            if (isUserJoin(message))
             {
-                // stay this state
-                // send resdonped user directly message
-                result.Add(CreateDirectMessage(message.Room, message.User.id,"check"));
+                if (acceptUsers.Any(q => q.id == message.User.id))
+                {
+                    result.Add(new Message()
+                    {
+                        callback_query_id = message.CommandId,
+                        show_alert = false,
+                        Text = "Записал в список хороших детей!"
+                    });
+                }
+                else
+                {
+                    if (refuseUsers.Any(q => q.id == message.User.id))
+                    {
+                        refuseUsers.Remove(refuseUsers.First(q => q.id == message.User.id));
+                    }
+                    acceptUsers.Add(message.User);
+                    result.Add(new Message()
+                    {
+                        callback_query_id = message.CommandId,
+                        show_alert = false,
+                        Text = "Записал в список хороших детей!"
+                    });
+                    result.Add(new Message() { Room = message.Room, Text = $"@{message.User.name} я тебя услышал" });
+                }
             }
             else
             {
-                // respond all and go form this state
-                var list = Extension.Rand(session.Selected.Count);
-                for(int i=0; i<session.Selected.Count;i++)
+                if (isUserRefuse(message))
                 {
-                    //
-                    result.Add(CreateDirectMessage(message.Room, session.Selected[i].id, $"ты даришь подарок {session.Selected[list[i]].nam}"));
+                    if (refuseUsers.Any(q=>q.id==message.User.id))
+                    {
+                        result.Add(new Message()
+                        {
+                            callback_query_id = message.CommandId,
+                            show_alert = false,
+                            Text = "Записал в список плохишей!"
+                        });
+                    }
+                    else
+                    {
+                        if (acceptUsers.Any(q=>q.id == message.User.id))
+                        {
+                            acceptUsers.Remove(acceptUsers.First(q => q.id == message.User.id));
+                        }
+                        refuseUsers.Add(message.User);
+                        result.Add(new Message()
+                        {
+                            callback_query_id = message.CommandId,
+                            show_alert = false,
+                            Text = "Записал в список плохишей!"
+                        });
+                        result.Add(new Message() { Room = message.Room, Text = $"@{message.User.name} я тебя понял" });
+                    }
                 }
-                session.SessionState = null;
             }
-            return result;
+
+            if (isFinishCommand(message) || memberCount <= acceptUsers.Count + refuseUsers.Count)
+            {
+                // respond all and go form this state
+                var buttons = new List<List<Button>>() { new List<Button>() { new Button() { Text = "Чей я Санта?", Data = "Узнать" } } };
+                result.Add(new Message()
+                {
+                    Room = message.Room,
+                    Text = "Ура! Пора узнать чей ты секретный Санта!",
+                    keybord = new Keyboard()
+                    {
+                        Buttons = buttons,
+                        Inline = true
+                    }
+
+                });
+                session.SessionState = new GetResultState(acceptUsers);
+                return result;
+            }
+             return result;
         }
 
-        private void RememberRespondedUser(User user)
+        private bool isUserJoin(Message msg)
         {
-            throw new NotImplementedException();
+            return msg.Command == "Участвовать";
         }
 
-        private bool isAllUsersRespond()
+        private bool isUserRefuse(Message msg)
         {
-            throw new NotImplementedException();
+            return msg.Command == "Отказаться";
         }
 
-        private Message CreateDirectMessage(int chat, int user, string text)
+        private bool isFinishCommand(Message msg)
         {
-            throw new NotImplementedException();
+            return msg.Text == "/finish";
         }
     }
 
+    public class GetResultState : ISessionState
+    {
+        Dictionary<string, string> UserResults;
 
+        public GetResultState(List<User> results)
+        {
+            UserResults = new Dictionary<string, string>();
+            var list = Enumerable.Range(0, results.Count).ToList(); // Extension.Rand(results.Count);
+            var _list = results.ToArray();
+            var i = 0;
+            foreach (var res in results)
+            {
+                UserResults.Add(res.name, _list[list[i]].name);
+                i++;
+            }
+        }
+        public IEnumerable<Message> NextState(Message message, RoomSession session)
+        {
+            List<Message> result = new List<Message>() { };
+            
+            if(isRestartCommand(message))
+            {
+                var start = new StartSessionState();
+                message.Text = "/start";
+                var res = start.NextState(message, session);
+                result.AddRange(res);
+            }
+            else
+            {
+                if (isGetResultCommand(message))
+                {
+                    if (UserResults.ContainsKey(message.User.name))
+                    {
+                        result.Add(new Message()
+                        {
+                            callback_query_id = message.CommandId,
+                            show_alert = true,
+                            Text = $"Ты секртеный Санта для @{UserResults[message.User.name]}"
+                        });
+                    }
+                    else
+                    {
+                        result.Add(new Message()
+                        {
+                            callback_query_id = message.CommandId,
+                            show_alert = false,
+                            Text = $"Ты ж не участвовал плохишь!"
+                        });
+                    }
+                }
+            }
 
+            return result;
+        }
+
+        private bool isRestartCommand(Message msg)
+        {
+            return msg.Text == "/start";
+        }
+
+        private bool isGetResultCommand(Message msg)
+        {
+            return msg.Command == "Узнать";
+        }
+    }
 }

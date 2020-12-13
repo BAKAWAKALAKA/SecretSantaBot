@@ -6,5 +6,7 @@ namespace SecretSantaBot
     {
         IEnumerable<Message> GetUpdates();
         bool SendResponse(Message response);
+
+        int GetRoomUserCount(string chatId);
     }
 }

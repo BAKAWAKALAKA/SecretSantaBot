@@ -9,11 +9,14 @@ namespace SecretSantaBot
     {
         List<RoomSession> _sessions;
 
+        public SecretCommandHandler()
+        {
+            _sessions = new List<RoomSession>();
+        }
+
         public bool CanRespond(Message message)
         {
-            //todo if bot join to room
-            var session = _sessions.FirstOrDefault(q => q.Room == message.Room);
-            return (session != null) ? true : false;
+            return message.RoomType != "private" ? true : true;
         }
 
         public IEnumerable<Message> Respond(Message message)
@@ -32,10 +35,9 @@ namespace SecretSantaBot
             {
                 var newRoomSession = new RoomSession(message.Room);
                 _sessions.Add(newRoomSession);
+                Console.WriteLine($"==============new room, room count {_sessions.Count}");
                 return newRoomSession.Next(message);
             }
         }
-
-        
     }
 }

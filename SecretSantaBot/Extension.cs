@@ -7,6 +7,9 @@ namespace SecretSantaBot
 {
     public static class Extension
     {
+
+        public static IDriver TelegramDriver;
+
         public static Random Random {
             get
             {
@@ -19,11 +22,24 @@ namespace SecretSantaBot
 
         public static List<int> Rand(int lenght)
         {
+            if (lenght < 1)
+            {
+                throw new ArgumentException("lenght can't be less than 1");
+            }
+            if (lenght == 1)
+            {
+                return new List<int>() { 0 };
+            }
+            if (lenght == 2)
+            {
+                return new List<int>() { 1, 0 };
+            }
             int n = lenght;
             int[] perm = Enumerable.Range(0, n).ToArray();
-            for (int i = n - 1; i >= 1; i--)
+            for (int i = n - 1; i >= 0; i--)
             {
-                int j = Extension.Random.Next(i + 1);
+                int j = Extension.Random.Next(lenght);
+                while (i == j || i == perm[j] || perm[i] == j) { j = Extension.Random.Next(lenght); }
                 // exchange perm[j] and perm[i]
                 int temp = perm[j];
                 perm[j] = perm[i];

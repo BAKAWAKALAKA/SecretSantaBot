@@ -14,6 +14,7 @@ namespace SecretSantaBot
         public SecretSantaBot(IDriver driver, ICommandHandler[] handlers)
         {
             _driver = driver;
+            Extension.TelegramDriver = _driver;
             _handlers = handlers;
             _timer = new Timer((x) => this.Update());
         }
@@ -44,9 +45,16 @@ namespace SecretSantaBot
                     }
                 }
             }
+            Console.WriteLine($"response count: {result.Count}");
             foreach (var response in result)
             {
-                _driver.SendResponse(response);
+                try
+                {
+                    _driver.SendResponse(response);
+                } catch(Exception e)
+                {
+                    Console.WriteLine(e);
+                }
             }
         }
     }

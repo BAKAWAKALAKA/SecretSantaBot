@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ProxyParser;
 using Telegram.Models;
 
 namespace SecretSantaBotConsole.Implementation
@@ -12,65 +11,52 @@ namespace SecretSantaBotConsole.Implementation
     public class TelegramDriver : IDriver
     {
         private Telegram.Telegram _telegram;
-        private ProxyServerGrabberFromFile _proxy;
-        private int _lastTime; // maybe be using for getupdate method
-        public TelegramDriver(Telegram.Telegram telegram, ProxyServerGrabberFromFile proxy)
+        public TelegramDriver(Telegram.Telegram telegram)
         {
             _telegram = telegram;
-            _proxy = proxy;
-
-
         }
 
-        public IEnumerable<Message> GetUpdates()
+        public IEnumerable<SecretSantaBot.Message> GetUpdates()
         {
             try
             {
                 var results = _telegram.GetUpdates();
-                var messages = results.Select(q => q.message.CreateBotMessage());
+                Console.WriteLine($"cur upd: {results.Count()}");
+                var messages = results.Where(q=>q.message!=null).Select(q => q.message.CreateBotMessage()).ToList();
+                messages.AddRange(results.Where(q => q.callback_query != null).Select(q => q.callback_query.CreateBotMessage()));
+                Console.WriteLine($"mes: {messages.Count()}");
                 return messages;
             }
             catch(Exception exception)
             {
-                var proxy = _proxy.current_proxy;
-                while (proxy!=null)
-                {
-                    _telegram.ChangeProxy(proxy);
-                    if (_telegram.CheckConnection())
-                    {
-                        return new List<Message>();
-                    }
-                    proxy = _proxy.current_proxy;
-                }
-                throw new Exception("can't connect to telegram server. Proxy didn't help");
+                throw new Exception("can't connect to telegram server.");
             }
         }
 
-        public bool SendResponse(Message response)
+        public bool SendResponse(SecretSantaBot.Message response)
         {
             try
             {
-                var message = response.CreateTelegramReplay();
-                var result = _telegram.SendMessage(message);
-                return result != null;
+                if (response.callback_query_id == null)
+                {
+                    var message = response.CreateTelegramReplay();
+                    var result = _telegram.SendMessage(message);
+                    return result != null;
+                }
+                else
+                {
+                    var mes = response.CreateTelegramCallbackQueryReplay();
+                    var result = _telegram.SendAnswerCalbackQuery(mes);
+                    return result != null;
+                }
             }
             catch (Exception exception)
             {
-                var proxy = _proxy.current_proxy;
-                while (proxy != null)
-                {
-                    _telegram.ChangeProxy(proxy);
-                    if (_telegram.CheckConnection())
-                    {
-                        return false;
-                    }
-                    proxy = _proxy.current_proxy;
-                }
-                throw new Exception("can't connect to telegram server. Proxy didn't help");
+                throw new Exception("can't connect to telegram server.");
             }
         }
 
-        private int GetRoomUserCount(int chatId)
+        public int GetRoomUserCount(string chatId)
         {
             try
             {
@@ -79,17 +65,7 @@ namespace SecretSantaBotConsole.Implementation
             }
             catch(Exception exception)
             {
-                var proxy = _proxy.current_proxy;
-                while (proxy != null)
-                {
-                    _telegram.ChangeProxy(proxy);
-                    if (_telegram.CheckConnection())
-                    {
-                        return -1;
-                    }
-                    proxy = _proxy.current_proxy;
-                }
-                throw new Exception("can't connect to telegram server. Proxy didn't help");
+                throw new Exception("can't connect to telegram server.");
             }
         }
 
@@ -102,17 +78,7 @@ namespace SecretSantaBotConsole.Implementation
             }
             catch (Exception exception)
             {
-                var proxy = _proxy.current_proxy;
-                while (proxy != null)
-                {
-                    _telegram.ChangeProxy(proxy);
-                    if (_telegram.CheckConnection())
-                    {
-                        return null;
-                    }
-                    proxy = _proxy.current_proxy;
-                }
-                throw new Exception("can't connect to telegram server. Proxy didn't help");
+                throw new Exception("can't connect to telegram server.");
             }
         }
     }
