@@ -10,13 +10,12 @@ namespace SecretSantaBot
         public List<User> Selected { get; set; }
         public string Room { get; private set; }
         public ISessionState SessionState { get; set; }
-        public ISessionState NextState { get; set; }
 
-        public RoomSession(string room)
+        public RoomSession(string room, ISessionState startSesionState)
         {
             Room = room;
             Selected = new List<User>();
-            SessionState = new StartSessionState();
+            SessionState = startSesionState;
         }
 
         public IEnumerable<Message> Next(Message message)

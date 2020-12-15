@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Dapper;
+using System;
 using System.Collections.Generic;
+using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 
@@ -19,6 +21,41 @@ namespace SecretSantaBot
             }
         }
         private static Random _random;
+
+        // for test
+        public static dynamic ROP(int id, string Text)
+        {
+            using (var db = new SQLiteConnection("Data Source=model.db;"))
+            {
+                var data = db.Query<dynamic>($"select * from user where id={id};");
+                if (data.Any())
+                {
+                    var res = db.Query<dynamic>($"UPDATE user SET wish = \"7878\" WHERE id={id};");
+                }
+                else
+                {
+                    var res = db.Query<dynamic>("INSERT INTO user (id, wish)" +
+                                                $"VALUES ({id}, \"{Text}\");");
+                }
+                data = db.Query<dynamic>($"select * from user where id={id};");
+                return data?.First();
+            }
+             
+        }
+
+        // for test
+        public static void DROP(int id)
+        {
+            using (var db = new SQLiteConnection("Data Source=model.db;"))
+            {
+                var data = db.Query<dynamic>($"select * from user where id={id};");
+                if (data.Any())
+                {
+                    var res = data.First().wish;
+                }
+            }
+
+        }
 
         public static List<int> Rand(int lenght)
         {

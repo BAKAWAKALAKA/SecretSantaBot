@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SecretSantaBot.Interfaces;
+using System.Data.SQLite;
+using Dapper;
 
 namespace SecretSantaBot
 {
@@ -188,11 +190,27 @@ namespace SecretSantaBot
                 {
                     if (UserResults.ContainsKey(message.User.name))
                     {
+                        var _text = $"Ты секртеный Санта для @{UserResults[message.User.name]}";
+                        try
+                        {
+                            using (var db = new SQLiteConnection("Data Source=model.db;"))
+                            {
+                                var data = db.Query<dynamic>($"select * from user where id={message.User.id};");
+                                if (data.Any() && data.First().wish != null)
+                                {
+                                    _text += $".Его пожелания:\n{data.First().wish}";
+                                }
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine("не получилось взять из базы данные");
+                        }
                         result.Add(new Message()
                         {
                             callback_query_id = message.CommandId,
                             show_alert = true,
-                            Text = $"Ты секртеный Санта для @{UserResults[message.User.name]}"
+                            Text = _text
                         });
                     }
                     else
@@ -218,6 +236,37 @@ namespace SecretSantaBot
         private bool isGetResultCommand(Message msg)
         {
             return msg.Command == "Узнать";
+        }
+    }
+
+    public class WishState : ISessionState
+    {
+        public IEnumerable<Message> NextState(Message message, RoomSession session)
+        {
+            var results = new List<Message>();
+            if (!string.IsNullOrWhiteSpace(message.Text))
+            {
+                using (var db = new SQLiteConnection("Data Source=model.db;"))
+                {
+                    var data = db.Query<dynamic>($"select * from user where id={message.User.id};");
+                    if (data.Any())
+                    {
+                        var res = db.Query<dynamic>($"UPDATE user SET wish = \"{message.Text}\" WHERE id={message.User.id};");
+                    }
+                    else
+                    {
+                        var res = db.Query<dynamic>("INSERT INTO user (id, wish)" +
+                                                    $"VALUES ({message.User.id}, \"{message.Text}\");");
+                    }
+                }
+                results.Add(new Message()
+                {
+                    Room = message.Room,
+                    Text = $"\"{message.Text}\"\n\nЗаписал!Если нужно что-то поменять - просто пришли /wish",
+                });
+                session.SessionState = null;
+            }
+            return results;
         }
     }
 }

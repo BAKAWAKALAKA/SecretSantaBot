@@ -29,32 +29,40 @@ namespace SecretSantaBot
         /// </summary>
         private void Update()
         {
-            var updates = _driver.GetUpdates();
-            var result = new List<Message>();
-            foreach (var update in updates)
+            try
             {
-                foreach (var handler in _handlers)
+                var updates = _driver.GetUpdates();
+                var result = new List<Message>();
+                foreach (var update in updates)
                 {
-                    if (handler.CanRespond(update))
+                    foreach (var handler in _handlers)
                     {
-                        var responses = handler.Respond(update);
-                        if (responses.Any())
+                        if (handler.CanRespond(update))
                         {
-                            result.AddRange(responses);
+                            var responses = handler.Respond(update);
+                            if (responses.Any())
+                            {
+                                result.AddRange(responses);
+                            }
                         }
                     }
                 }
-            }
-            Console.WriteLine($"response count: {result.Count}");
-            foreach (var response in result)
-            {
-                try
+                Console.WriteLine($"response count: {result.Count}");
+                foreach (var response in result)
                 {
-                    _driver.SendResponse(response);
-                } catch(Exception e)
-                {
-                    Console.WriteLine(e);
+                    try
+                    {
+                        _driver.SendResponse(response);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
             }
         }
     }

@@ -16,7 +16,7 @@ namespace SecretSantaBot
 
         public bool CanRespond(Message message)
         {
-            return message.RoomType != "private" ? true : true;
+            return message.RoomType != "private" ? true : false;
         }
 
         public IEnumerable<Message> Respond(Message message)
@@ -33,7 +33,7 @@ namespace SecretSantaBot
             }
             else
             {
-                var newRoomSession = new RoomSession(message.Room);
+                var newRoomSession = new RoomSession(message.Room,  new StartSessionState());
                 _sessions.Add(newRoomSession);
                 Console.WriteLine($"==============new room, room count {_sessions.Count}");
                 return newRoomSession.Next(message);

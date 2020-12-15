@@ -11,9 +11,9 @@ namespace SecretSantaBotConsole
         {
             Console.WriteLine("Hello World!");
             var telegram = new Telegram.Telegram();
-            var helpH = new HelpCommandHandler();
+            var privatHandler = new PrivateRoomCommandHandler();
             var se = new SecretCommandHandler();
-            var bot = new SecretSantaBot.SecretSantaBot(new SecretSantaBotConsole.Implementation.TelegramDriver(telegram), new ICommandHandler[] { se, helpH });
+            var bot = new SecretSantaBot.SecretSantaBot(new SecretSantaBotConsole.Implementation.TelegramDriver(telegram), new ICommandHandler[] { se, privatHandler });
             bot.Run(new TimeSpan(0,0,2));
             while (true) { }
         }

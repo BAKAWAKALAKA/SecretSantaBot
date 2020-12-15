@@ -27,5 +27,12 @@ namespace SecretSantaBot.Tests
             }
             Assert.IsTrue(true);
         }
+
+        [TestMethod]
+        public void ROPTest()
+        {
+            var t = Extension.ROP(0, "test");
+            Assert.IsTrue(true);
+        }
     }
 }

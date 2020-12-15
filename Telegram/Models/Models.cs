@@ -144,7 +144,7 @@ namespace Telegram.Models
         public ReplyMarkup1 reply_markup { get; set; }
         public Message reply_to_message { get; set; }
         public Contact contact { get; set; }
-        public Photo photo { get; set; }
+      //  public Photo photo { get; set; }
         public Sticker sticker { get; set; }
         public From forward_from { get; set; }
         public int forward_date { get; set; }
@@ -174,7 +174,7 @@ namespace Telegram.Models
         public InlineKeyboardMarkup reply_markup { get; set; }
         public Message reply_to_message { get; set; }
         public Contact contact { get; set; }
-        public Photo photo { get; set; }
+       // public Photo photo { get; set; }
         public Sticker sticker { get; set; }
         public From forward_from { get; set; }
         public int forward_date { get; set; }
