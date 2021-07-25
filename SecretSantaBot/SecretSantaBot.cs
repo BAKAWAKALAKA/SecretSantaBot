@@ -19,6 +19,7 @@ namespace SecretSantaBot
             _timer = new Timer((x) => this.Update());
         }
 
+
         public void Run(TimeSpan period)
         {
             _timer.Change(new TimeSpan(), period);

@@ -13,6 +13,7 @@ namespace Telegram
         private string _base;
         private string requestTemplate = @"https://api.telegram.org/bot{0}";
         private long _lastUpdate;
+        private long _offset;
         private bool isFirstTime; // костыль ибо телега говно которая не может нормлаьно время проставлять для колбеков
 
         public Telegram()
@@ -64,12 +65,13 @@ namespace Telegram
         {
             try
             {
-                var result = Execute<Updates>("getUpdates");
+               
+                var result = (_offset == null) ? Execute<Updates>("getUpdates"): Execute<Updates>($"getUpdates?offset={_offset+1}");
                 if (result?.ok ?? false)
                 {
                     if (!isFirstTime)
                     {
-                        
+                        if(result.result.Count()>99) _offset = result.result.OrderBy(q => q.update_id).Last().update_id;
                         Console.WriteLine($"raw upd: {result.result.Count}");
                         var results = result.result.Where(q => q.message?.date > _lastUpdate).ToList();
                         results.AddRange(result.result.Where(q => q.callback_query?.message?.date > _lastUpdate));
@@ -86,6 +88,7 @@ namespace Telegram
                     }
                     else
                     {
+                        if (result.result.Count() > 99) _offset = result.result.OrderBy(q => q.update_id).Last().update_id;
                         Console.WriteLine($"raw upd: {result.result.Count}");
                         var results = result.result.Where(q => q.update_id> _lastUpdate).ToList();
                         if (results.Any())
@@ -142,14 +145,14 @@ namespace Telegram
             return result.result;
         }
 
-        public From GetChatMember(int chatId, int userId)
+        public From GetChatMember(string chatId, int userId)
         {
             try
             {
                 var result = Execute<UserMemberResponse>($"getChatMember?chat_id={chatId}&user_id={userId}");
                 if (result.ok)
                 {
-                    return result.user;
+                    return result.result.user;
                 }
                 return null;
             }

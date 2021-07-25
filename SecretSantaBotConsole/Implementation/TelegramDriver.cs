@@ -69,12 +69,19 @@ namespace SecretSantaBotConsole.Implementation
             }
         }
 
-        private From GetRoomUser(int chat,int id)
+        public User GetUser(int id, string chatId)
         {
             try
             {
-                var results = _telegram.GetChatMember(chat, id);
-                return results;
+                var from = _telegram.GetChatMember(chatId, id);
+                var user = new User()
+                {
+                    id = from.id,
+                    name = $"{from.username} {from.first_name} {from.last_name}"
+
+                };
+
+                return user;
             }
             catch (Exception exception)
             {

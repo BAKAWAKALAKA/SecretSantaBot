@@ -244,6 +244,12 @@ namespace Telegram.Models
     public class UserMemberResponse : Response
     {
         public bool ok { get; set; }
+        public From1 result { get; set; }
+    }
+
+
+    public class From1
+    {
         public From user { get; set; }
     }
 

@@ -8,5 +8,7 @@ namespace SecretSantaBot
         bool SendResponse(Message response);
 
         int GetRoomUserCount(string chatId);
+
+        User GetUser(int id, string chatId);
     }
 }

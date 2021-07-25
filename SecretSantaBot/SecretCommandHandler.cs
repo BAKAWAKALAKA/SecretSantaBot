@@ -35,7 +35,7 @@ namespace SecretSantaBot
             {
                 var newRoomSession = new RoomSession(message.Room,  new StartSessionState());
                 _sessions.Add(newRoomSession);
-                Console.WriteLine($"==============new room, room count {_sessions.Count}");
+                Console.WriteLine($"new room, room count {_sessions.Count}");
                 return newRoomSession.Next(message);
             }
         }
