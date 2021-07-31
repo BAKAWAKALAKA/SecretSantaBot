@@ -4,6 +4,7 @@ using System.Data.SQLite;
 using System.Linq;
 using Dapper;
 using SecretSantaBot;
+using SecretSantaBotConsole.Implementation;
 
 namespace SecretSantaBotConsole
 {
@@ -15,9 +16,8 @@ namespace SecretSantaBotConsole
         {
             Console.WriteLine("Bot start");
             var telegram = new Telegram.Telegram();
-            SecretSantaBot.Extension.TelegramDriver = new SecretSantaBotConsole.Implementation.TelegramDriver(telegram);
-            var privatHandler = new PrivateRoomCommandHandler();
-            var bot = new SecretSantaBot.SecretSantaBot(new SecretSantaBotConsole.Implementation.TelegramDriver(telegram), new ICommandHandler[] { new SecretCommandHandler(), privatHandler });
+            SecretSantaBot.Extension.TelegramDriver = new TelegramDriver(telegram);
+            var bot = new SecretSantaBot.SecretSantaBot(new TelegramDriver(telegram), new ICommandHandler[] { new SecretCommandHandler(), new PrivateRoomCommandHandler() });
             bot.Run(new TimeSpan(0,0,5));
             while (true) { }
         }
