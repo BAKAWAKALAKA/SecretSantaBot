@@ -64,8 +64,12 @@ namespace SecretSantaBot
 
         }
 
+        // создаем список
+        // создаем новый список в который ставим рандомно элементы из первого (удоляя их из исходного)
+        // нельзя чтобы чтобы индекс совпадал с значением
         public static List<int> Rand(int lenght)
         {
+            var _random = new Random();
             if (lenght < 1)
             {
                 throw new ArgumentException("lenght can't be less than 1");
@@ -76,19 +80,17 @@ namespace SecretSantaBot
             }
 
             int n = lenght;
-            var perm = new int[n];
+            var perm = new List<int>();
+            var result = new List<int>();
+            for (int i = 0; i < n; i++) perm.Add(i);
             for (int i = 0; i < n; i++)
             {
-                if (i + 1 == n)
-                {
-                    perm[i] = 0;
-                }
-                else
-                {
-                    perm[i] = i + 1;
-                }
+                var tempValues = perm.Where(q => q != i).ToArray();
+                var tempI = (i + 1 == n) ? _random.Next(0, tempValues.Count() - 1): 0;
+                result.Add(tempValues[tempI]);
+                perm.Remove(tempValues[tempI]);
             }
-            return perm.ToList();
+            return result;
         }
 
     }
