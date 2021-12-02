@@ -14,13 +14,16 @@ namespace SecretSantaBot
         public GetResultState(List<User> results)
         {
             UserResults = new Dictionary<int, User>();
-            var list = Extension.Rand(results.Count);
-            var _list = results.ToArray();
-            var i = 0;
-            foreach (var res in results)
+            if (results.Any())
             {
-                UserResults.Add(res.id, _list[list[i]]);
-                i++;
+                var list = Extension.Rand(results.Count);
+                var _list = results.ToArray();
+                var i = 0;
+                foreach (var res in results)
+                {
+                    UserResults.Add(res.id, _list[list[i]]);
+                    i++;
+                }
             }
         }
         public IEnumerable<Message> NextState(Message message, RoomSession session)
