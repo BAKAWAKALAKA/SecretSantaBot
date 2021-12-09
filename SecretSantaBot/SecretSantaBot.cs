@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -10,9 +11,11 @@ namespace SecretSantaBot
         Timer _timer;
         IDriver _driver;
         ICommandHandler[] _handlers;
+        ILogger _logger;
 
-        public SecretSantaBot(IDriver driver, ICommandHandler[] handlers)
+        public SecretSantaBot(IDriver driver, ICommandHandler[] handlers, ILogger logger = null)
         {
+            _logger = logger;
             _driver = driver;
             Extension.TelegramDriver = _driver;
             _handlers = handlers;
@@ -28,7 +31,7 @@ namespace SecretSantaBot
         /// <summary>
         /// such simple realization because we don't need to use notify, deffered messages or hold callback message
         /// </summary>
-        private void Update()
+        public void Update()
         {
             try
             {
@@ -48,7 +51,7 @@ namespace SecretSantaBot
                         }
                     }
                 }
-                Console.WriteLine($"response count: {result.Count}");
+                _logger.LogDebug($"response count: {result.Count}");
                 foreach (var response in result)
                 {
                     try
@@ -57,13 +60,13 @@ namespace SecretSantaBot
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine(e);
+                        _logger.LogError(e,e.Message);
                     }
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                _logger.LogError(e,e.Message);
             }
         }
     }

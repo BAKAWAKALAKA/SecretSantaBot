@@ -130,7 +130,7 @@ namespace SecretSantaBot
                     }
 
                 });
-                session.SessionState = new GetResultState(acceptUsers);
+                session.SessionState = new GetResultState(session,acceptUsers);
                 return result;
             }
             return result;

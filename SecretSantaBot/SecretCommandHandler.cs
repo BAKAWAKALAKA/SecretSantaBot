@@ -33,6 +33,7 @@ namespace SecretSantaBot
             }
             else
             {
+                // check if room new. if db has it then get from db
                 var newRoomSession = new RoomSession(message.Room,  new StartSessionState());
                 _sessions.Add(newRoomSession);
                 Console.WriteLine($"new room, room count {_sessions.Count}");

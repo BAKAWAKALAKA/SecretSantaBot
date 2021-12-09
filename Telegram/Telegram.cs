@@ -72,7 +72,7 @@ namespace Telegram
                     if (!isFirstTime)
                     {
                         if(result.result.Count()>99) _offset = result.result.OrderBy(q => q.update_id).Last().update_id;
-                        Console.WriteLine($"raw upd: {result.result.Count}");
+                        // Console.WriteLine($"raw upd: {result.result.Count}");
                         var results = result.result.Where(q => q.message?.date > _lastUpdate).ToList();
                         results.AddRange(result.result.Where(q => q.callback_query?.message?.date > _lastUpdate));
                         if (result.result.Any())
@@ -89,7 +89,7 @@ namespace Telegram
                     else
                     {
                         if (result.result.Count() > 99) _offset = result.result.OrderBy(q => q.update_id).Last().update_id;
-                        Console.WriteLine($"raw upd: {result.result.Count}");
+                        // Console.WriteLine($"raw upd: {result.result.Count}");
                         var results = result.result.Where(q => q.update_id> _lastUpdate).ToList();
                         if (results.Any())
                         {
@@ -102,7 +102,6 @@ namespace Telegram
             }
             catch (Exception e)
             {
-                Console.WriteLine("tl err");
                 throw;
             }
         }

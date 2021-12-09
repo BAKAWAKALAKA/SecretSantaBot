@@ -10,9 +10,11 @@ namespace SecretSantaBot
     public class GetResultState : ISessionState
     {
         Dictionary<int, User> UserResults;
+        RoomSession roomSession;
 
-        public GetResultState(List<User> results)
+        public GetResultState(RoomSession roomSession,List<User> results)
         {
+            // results = GetFromDb();
             UserResults = new Dictionary<int, User>();
             if (results.Any())
             {
@@ -24,8 +26,38 @@ namespace SecretSantaBot
                     UserResults.Add(res.id, _list[list[i]]);
                     i++;
                 }
+                SetResultTodb();
             }
         }
+
+        private List<User> GetFromDb()
+        {
+            var results = new List<User>();
+            using (var db = new SQLiteConnection("Data Source=model.db;"))
+            {
+                var data = db.Query<dynamic>($"select u.userid, u.firstname, u.lastname, u.nickname from roomuser ru inner left user u on u.userid=ru.userid where ru.roomid={roomSession.Room} and ru.choice = 1;");
+                if (data.Any())
+                {
+                    foreach(var user in data)
+                    {
+                        results.Add(new User() { id = user.userid, name = $"{user.firstname} {user.lastname} {user.nickname}" });
+                    }
+                }
+                return results;
+            }
+        }
+
+        private void SetResultTodb()
+        {
+            using (var db = new SQLiteConnection("Data Source=model.db;"))
+            {
+                foreach(var user in UserResults)
+                {
+                    var res = db.Query<dynamic>($"INSERT INTO results (userid, roomid, touserid) VALUES ({user.Key}, {roomSession.Room}, {user.Value.id});");
+                }
+            }
+        }
+
         public IEnumerable<Message> NextState(Message message, RoomSession session)
         {
             List<Message> result = new List<Message>() { };
