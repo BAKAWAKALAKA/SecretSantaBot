@@ -77,7 +77,7 @@ namespace SecretSantaService.Implementation
                 var user = new User()
                 {
                     id = from.id,
-                    name = $"{from.username} {from.first_name} {from.last_name}"
+                    fullname = $"{from.username} {from.first_name} {from.last_name}"
 
                 };
 

@@ -15,7 +15,10 @@ namespace SecretSantaService
             mes.User = new User()
             {
                 id = tlgMsg.from.id,
-                name = $"{tlgMsg.from.username} {tlgMsg.from.first_name}" //todo исправить на чтото более удобное
+                fullname = $"{tlgMsg.from.username} {tlgMsg.from.first_name} {tlgMsg.from.last_name}",
+                FirstName = tlgMsg.from.first_name,
+                LastName = tlgMsg.from.last_name,
+                Nickname = tlgMsg.from.username
             };
             mes.msgId = tlgMsg.message_id;
             mes.Room = tlgMsg.chat.id;
@@ -32,7 +35,7 @@ namespace SecretSantaService
             mes.User = new User()
             {
                 id = tlgMsg.from.id,
-                name = $"{tlgMsg.from.username} {tlgMsg.from.first_name}"
+                fullname = $"{tlgMsg.from.username} {tlgMsg.from.first_name}"
             };
             mes.Room = tlgMsg.message.chat.id;
             mes.RoomType = tlgMsg.message.chat.type;
@@ -83,7 +86,8 @@ namespace SecretSantaService
                     tlList.Add(new InlineKeyboardButton()
                     {
                         text = k.Text,
-                        callback_data = k.Data
+                        callback_data = k.Data,
+                        url = k.URL
                     });
                 }
                 tlgk.inline_keyboard.Add(tlList);

@@ -35,6 +35,17 @@ namespace SecretSantaBot
             else
             {
                 var results = new List<Message>();
+                if (message.Text == "/start=wish")
+                {
+                    var newRoomSession = new RoomSession(message.Room, new WishState());
+                    _sessions.Add(newRoomSession);
+                    results.Add(new Message()
+                    {
+                        Room = message.Room,
+                        Text = $"Напиши свои пожелания, а я сообщу их твоему Секретному Санте.",
+                    });
+                }
+
                 if (message.Text == "/wish")
                 {
                     var newRoomSession = new RoomSession(message.Room, new WishState());

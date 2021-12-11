@@ -12,9 +12,9 @@ namespace SecretSantaBot
         Dictionary<int, User> UserResults;
         RoomSession roomSession;
 
-        public GetResultState(RoomSession roomSession,List<User> results)
+        public GetResultState(RoomSession roomSession)
         {
-            // results = GetFromDb();
+            var results = GetFromDb();
             UserResults = new Dictionary<int, User>();
             if (results.Any())
             {
@@ -26,7 +26,7 @@ namespace SecretSantaBot
                     UserResults.Add(res.id, _list[list[i]]);
                     i++;
                 }
-                SetResultTodb();
+                SetResultToDb();
             }
         }
 
@@ -40,14 +40,14 @@ namespace SecretSantaBot
                 {
                     foreach(var user in data)
                     {
-                        results.Add(new User() { id = user.userid, name = $"{user.firstname} {user.lastname} {user.nickname}" });
+                        results.Add(new User() { id = user.userid, fullname = $"{user.firstname} {user.lastname} {user.nickname}" });
                     }
                 }
                 return results;
             }
         }
 
-        private void SetResultTodb()
+        private void SetResultToDb()
         {
             using (var db = new SQLiteConnection("Data Source=model.db;"))
             {
@@ -75,7 +75,7 @@ namespace SecretSantaBot
                 {
                     if (UserResults.ContainsKey(message.User.id))
                     {
-                        var _text = $"Ты секртеный Санта для @{UserResults.GetValueOrDefault(message.User.id).name}";
+                        var _text = $"Ты секртеный Санта для @{UserResults.GetValueOrDefault(message.User.id).fullname}";
                         var subtext = "";
                         try
                         {

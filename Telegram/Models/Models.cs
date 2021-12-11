@@ -106,14 +106,14 @@ namespace Telegram.Models
     }
 
     public class InlineKeyboardButton
-    {
+    { // встроенае к сообщению кнопка
         public string text { get; set; }
         public string url { get; set; } //Опционально. URL, который откроется при нажатии на кнопку
         public string callback_data { get; set; }//Опционально. Данные, которые будут отправлены в callback_query при нажатии на кнопку
     }
 
     public class InlineKeyboardMarkup: ReplyMarkup
-    {
+    {// встроенная к сообщению клавиатура
         public List<List<InlineKeyboardButton>> inline_keyboard { get; set; }
     }
 

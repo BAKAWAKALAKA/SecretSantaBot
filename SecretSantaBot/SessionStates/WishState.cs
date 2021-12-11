@@ -24,8 +24,8 @@ namespace SecretSantaBot
                     }
                     else
                     {
-                        var res = db.Query<dynamic>("INSERT INTO user (id, wish)" +
-                                                    $"VALUES ({message.User.id}, \"{message.Text}\");");
+                        var res = db.Query<dynamic>("INSERT INTO user (id, nickname, lastname, firstname, wish)" +
+                                                    $"VALUES ({message.User.id}, \"{message.User.Nickname}\", \"{message.User.LastName}\", \"{message.User.FirstName}\", \"{message.Text}\");");
                     }
                 }
                 if (message.Text.Length < 200)

@@ -35,6 +35,7 @@ namespace SecretSantaBot
     {
         public string Text { get; set; }
         public string Data { get; set; }
+        public string URL { get; set; }
     }
 
     public enum RoomType
