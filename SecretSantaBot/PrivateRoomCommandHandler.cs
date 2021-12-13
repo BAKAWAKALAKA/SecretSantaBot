@@ -35,7 +35,7 @@ namespace SecretSantaBot
             else
             {
                 var results = new List<Message>();
-                if (message.Text == "/start=wish")
+                if (message.Text == "/start wish")
                 {
                     var newRoomSession = new RoomSession(message.Room, new WishState());
                     _sessions.Add(newRoomSession);

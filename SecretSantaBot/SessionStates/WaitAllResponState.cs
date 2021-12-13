@@ -9,6 +9,11 @@ namespace SecretSantaBot
 {
     public class WaitAllResponState : ISessionState
     {
+        long? startedUserId;
+        public WaitAllResponState(long? userId)
+        {
+            startedUserId = userId;
+        }
 
         public IEnumerable<Message> NextState(Message message, RoomSession session)
         {
@@ -26,6 +31,7 @@ namespace SecretSantaBot
             }
             else if (isUserRefuse(message))
             {
+                SetToDB(message, false);
                 result.Add(new Message()
                 {
                     callback_query_id = message.CommandId,
@@ -49,7 +55,7 @@ namespace SecretSantaBot
                     }
 
                 });
-                session.SessionState = new GetResultState(session);
+                session.SessionState = new GetResultState(message.Room);
                 return result;
             }
             return result;
@@ -69,7 +75,7 @@ namespace SecretSantaBot
                 {
                     db.Query<dynamic>($"INSERT INTO roomuser (userid, roomid, choice) VALUES ({message.User.id}, {message.Room}, {joinInt});");
                     var user = db.Query<dynamic>($"select * from user where id = {message.User.id}");
-                    if (user.Any())
+                    if (!user.Any())
                     {
                         db.Query<dynamic>($"INSERT INTO user (id, nickname, lastname, firstname) VALUES ({message.User.id}, \"{message.User.Nickname}\", \"{message.User.LastName}\", \"{message.User.FirstName}\");");
                     }
@@ -90,7 +96,7 @@ namespace SecretSantaBot
 
         private bool isFinishCommand(Message message)
         {
-            return message.Text == "/finish";
+            return message.Text == "/finish" && startedUserId == message.User.id;
         }
     }
 

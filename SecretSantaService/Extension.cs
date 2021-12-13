@@ -35,7 +35,11 @@ namespace SecretSantaService
             mes.User = new User()
             {
                 id = tlgMsg.from.id,
-                fullname = $"{tlgMsg.from.username} {tlgMsg.from.first_name}"
+                fullname = $"{tlgMsg.from.username} {tlgMsg.from.first_name} {tlgMsg.from.last_name}",
+                FirstName = tlgMsg.from.first_name,
+                LastName = tlgMsg.from.last_name,
+                Nickname = tlgMsg.from.username
+
             };
             mes.Room = tlgMsg.message.chat.id;
             mes.RoomType = tlgMsg.message.chat.type;

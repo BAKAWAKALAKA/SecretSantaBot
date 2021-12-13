@@ -9,13 +9,14 @@ namespace SecretSantaBot
 {
     public class GetResultState : ISessionState
     {
-        Dictionary<int, User> UserResults;
-        RoomSession roomSession;
+        Dictionary<long, User> UserResults;
+        string _room;
 
-        public GetResultState(RoomSession roomSession)
+        public GetResultState(string roomid)
         {
+            _room = roomid;
             var results = GetFromDb();
-            UserResults = new Dictionary<int, User>();
+            UserResults = new Dictionary<long, User>();
             if (results.Any())
             {
                 var list = Extension.Rand(results.Count);
@@ -35,12 +36,12 @@ namespace SecretSantaBot
             var results = new List<User>();
             using (var db = new SQLiteConnection("Data Source=model.db;"))
             {
-                var data = db.Query<dynamic>($"select u.userid, u.firstname, u.lastname, u.nickname from roomuser ru inner left user u on u.userid=ru.userid where ru.roomid={roomSession.Room} and ru.choice = 1;");
+                var data = db.Query<dynamic>($"select u.id, u.firstname, u.lastname, u.nickname from roomuser ru left join user u on u.id=ru.userid where ru.roomid=\"{_room}\" and ru.choice = 1;");
                 if (data.Any())
                 {
                     foreach(var user in data)
                     {
-                        results.Add(new User() { id = user.userid, fullname = $"{user.firstname} {user.lastname} {user.nickname}" });
+                        results.Add(new User() { id = user.id, fullname = $"{user.firstname} {user.lastname} {user.nickname}" });
                     }
                 }
                 return results;
@@ -53,7 +54,7 @@ namespace SecretSantaBot
             {
                 foreach(var user in UserResults)
                 {
-                    var res = db.Query<dynamic>($"INSERT INTO results (userid, roomid, touserid) VALUES ({user.Key}, {roomSession.Room}, {user.Value.id});");
+                    var res = db.Query<dynamic>($"INSERT INTO results (userid, roomid, touserid) VALUES ({user.Key}, \"{_room}\", {user.Value.id});");
                 }
             }
         }
